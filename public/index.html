@@ -1,3 +1,31 @@
-git add .
-git commit -m "add CBC simulator"
-git push
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CBC Live</title>
+</head>
+
+<body>
+<h2>CBC Live</h2>
+
+<input id="msg" placeholder="Message">
+<button onclick="send()">Send</button>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+const socket = io();
+
+function send() {
+  socket.emit('send_cb', {
+    msg: document.getElementById('msg').value
+  });
+}
+
+socket.on('receive_cb', (data) => {
+  alert("🚨 " + data.msg);
+});
+</script>
+
+</body>
+</html>
